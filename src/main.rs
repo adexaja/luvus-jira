@@ -1,8 +1,12 @@
 use base64::{Engine, engine::general_purpose::STANDARD as BASE64};
 use crossterm::{
+    cursor::MoveTo,
     event::{self, Event, KeyCode},
     execute,
-    terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
+    terminal::{
+        Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode,
+        enable_raw_mode,
+    },
 };
 use ratatui::{
     Terminal,
@@ -508,7 +512,14 @@ fn tui_loop(
     let mut notice = String::new();
     let mut pending_transitions: Option<Vec<Transition>> = None;
     let mut transition_index = 0usize;
+    let mut redraw_after_handoff = false;
     loop {
+        if redraw_after_handoff {
+            execute!(terminal.backend_mut(), MoveTo(0, 0), Clear(ClearType::All))
+                .map_err(|e| e.to_string())?;
+            terminal.clear().map_err(|e| e.to_string())?;
+            redraw_after_handoff = false;
+        }
         terminal
             .draw(|frame| {
                 let root = Layout::default()
@@ -808,6 +819,7 @@ fn tui_loop(
                                     notice = format!("Work handoff failed: {error}");
                                 }
                             }
+                            redraw_after_handoff = true;
                         }
                     }
                     _ => {}
