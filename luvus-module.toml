@@ -1,0 +1,69 @@
+id = "adexaja.luvus-jira"
+name = "Jira Ticket"
+version = "0.1.0"
+min_luvus_version = "0.8.3"
+description = "Rust TUI for browsing Jira tickets and preparing Luvus task-board integration."
+platforms = ["linux", "macos"]
+
+[[docks]]
+id = "jira-ticket"
+title = "Jira Ticket"
+placement = "sidebar.right"
+
+[[startup]]
+command = ["./target/release/luvus-jira"]
+
+[[actions]]
+id = "refresh"
+title = "Refresh Jira ticket"
+command = ["./target/release/luvus-jira"]
+ 
+[[actions]]
+id = "open"
+title = "Open Jira Board"
+command = ["./target/release/luvus-jira", "open"]
+contexts = ["workspace"]
+
+[[panes]]
+id = "jira-board"
+title = "Jira Board"
+command = ["./target/release/luvus-jira", "tui"]
+placement = "tab"
+
+
+
+[[settings]]
+key = "jira_base_url"
+title = "Jira base URL"
+type = "string"
+default = "https://your-domain.atlassian.net"
+
+
+[[settings]]
+key = "jira_project_key"
+title = "Default Jira project key"
+type = "string"
+default = ""
+
+[[settings]]
+key = "jira_email"
+title = "Jira email"
+type = "string"
+default = ""
+
+[[settings]]
+key = "jira_api_token"
+title = "Jira API token"
+type = "string"
+secret = true
+
+[[settings]]
+key = "jira_jql"
+title = "Jira JQL"
+default = "assignee = currentUser() ORDER BY updated DESC"
+
+[[settings]]
+key = "jira_agent_kind"
+title = "Default agent kind"
+type = "string"
+default = "codex"
