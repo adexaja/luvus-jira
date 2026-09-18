@@ -5,6 +5,9 @@ min_luvus_version = "0.8.3"
 description = "Rust TUI for browsing Jira tickets and preparing Luvus task-board integration."
 platforms = ["linux", "macos"]
 
+[[build]]
+command = ["cargo", "build", "--release"]
+
 [[docks]]
 id = "jira-ticket"
 title = "Jira Ticket"
