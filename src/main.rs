@@ -1,12 +1,8 @@
 use base64::{Engine, engine::general_purpose::STANDARD as BASE64};
 use crossterm::{
-    cursor::MoveTo,
     event::{self, Event, KeyCode},
     execute,
-    terminal::{
-        Clear, ClearType, EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode,
-        enable_raw_mode,
-    },
+    terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
 use ratatui::{
     Terminal,
@@ -513,9 +509,9 @@ fn tui_loop(
     let mut pending_transitions: Option<Vec<Transition>> = None;
     let mut transition_index = 0usize;
     loop {
-        execute!(io::stdout(), MoveTo(0, 0), Clear(ClearType::All)).map_err(|e| e.to_string())?;
-        terminal.draw(|frame| {
-            let root = Layout::default()
+        terminal
+            .draw(|frame| {
+                let root = Layout::default()
                     .direction(Direction::Vertical)
                     .constraints([
                         Constraint::Length(3),
