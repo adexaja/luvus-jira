@@ -2,6 +2,8 @@
 
 A Luvus module for browsing Jira issues and handing them to an agent in a dedicated Git worktree.
 
+<video src="https://github.com/user-attachments/assets/365ba3a4-9ef2-40e8-a7c7-34d673549398" controls width="100%"></video>
+
 ## Features
 
 - Jira issue dock and terminal UI.
